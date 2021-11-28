@@ -5,6 +5,8 @@ import { fileURLToPath } from 'url';
 import nock from 'nock';
 import pageLoader from '../src/pageLoader';
 
+const noop = () => {};
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const getFixturePath = (filename) => path.join(__dirname, '__fixtures__', filename);
@@ -13,25 +15,37 @@ const encode = {
   encoding: 'utf-8',
 };
 
+const TEST_URL = 'https://example.com/page';
 const EXAMPLE_HTML_PATH = getFixturePath('example.html');
+const TEST_DIR = path.join(os.tmpdir(), `jest-test-${new Date().getTime()}`);
+const TEST_FILE_NAME = 'example-com-page.html';
+const TEST_FILE_PATH = path.join(TEST_DIR, TEST_FILE_NAME);
 
-afterAll(async () => {
-  await fs.promises.unlink(EXAMPLE_HTML_PATH);
+let htmlExample;
+
+beforeAll(async () => {
+  await fs.mkdir(TEST_DIR);
+  htmlExample = await fs.readFile(EXAMPLE_HTML_PATH, encode);
 });
 
-test('pageLoader', async () => {
-  const url = 'https://example.com/page';
-  const pathToSave = os.tmpdir();
-  const htmlExample = await fs.readFile(EXAMPLE_HTML_PATH, encode);
-  const scope = nock(url).get('/').reply(200, htmlExample);
-  const result = await pageLoader(url, pathToSave);
-  const expectedFileName = 'example-com-page.html';
-  const filepath = path.join(os.tmpdir(), expectedFileName);
+afterAll(async () => {
+  await fs.rmdir(TEST_DIR, { recursive: true }).catch(noop);
+});
 
-  expect(result).toEqual({ filepath });
-  expect(scope.isDone()).toBeTruthy();
+afterEach(async () => {
+  await fs.unlink(TEST_FILE_PATH).catch(noop);
+});
 
-  const savedPage = await fs.readFile(filepath, encode);
+describe('pageLoader', () => {
+  test('Load and save html page to define directory', async () => {
+    const scope = nock(TEST_URL).get('').reply(200, htmlExample);
+    const result = await pageLoader(TEST_URL, TEST_DIR);
+    const filepath = path.join(TEST_DIR, TEST_FILE_NAME);
 
-  expect(savedPage).toEqual(htmlExample);
+    expect(result).toEqual({ filepath });
+    expect(scope.isDone()).toBeTruthy();
+
+    const savedPage = await fs.readFile(filepath, encode);
+    expect(savedPage).toEqual(htmlExample);
+  });
 });
