@@ -1,14 +1,11 @@
 import os from 'os';
 import fs from 'fs/promises';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import nock from 'nock';
 import pageLoader from '../src/pageLoader';
 
 const noop = () => {};
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 const getFixturePath = (filename) => path.join(__dirname, '__fixtures__', filename);
 
 const encode = {
