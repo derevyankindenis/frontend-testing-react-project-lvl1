@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable no-console */
 import { cwd, argv } from 'process';
 import { Command } from 'commander';
 import pageLoader from '../src/pageLoader';
