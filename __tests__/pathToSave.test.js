@@ -3,7 +3,7 @@ import path from 'path';
 import pathToSave from '../src/pathToSave';
 
 const TEST_URL = 'https://example.com/page';
-const FILE_NAME = 'example-com-page.html';
+const FILE_NAME = 'example-com-page';
 
 describe('pathToSave', () => {
   test('Return full path by defined full path and url', () => {
