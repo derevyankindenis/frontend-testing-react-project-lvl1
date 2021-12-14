@@ -6,4 +6,8 @@
 ```shell
 $ npx babel-node bin/page-loader --output /var/tmp https://ru.hexlet.io/courses
 ```
-[![asciicast](https://asciinema.org/a/YymUB8Kaw4TQI4PVkWAlzCmt3.svg)](https://asciinema.org/a/YymUB8Kaw4TQI4PVkWAlzCmt3)
+## Task 1
+[![asciicast](https://asciinema.org/a/aoezGvTzc6RtyVy4otEVUXhoy.svg)](https://asciinema.org/a/aoezGvTzc6RtyVy4otEVUXhoy)
+
+## Task 2
+[![asciicast](https://asciinema.org/a/tvwqK0V0tBkjIHBQE7QXDLvSZ.svg)](https://asciinema.org/a/tvwqK0V0tBkjIHBQE7QXDLvSZ)
