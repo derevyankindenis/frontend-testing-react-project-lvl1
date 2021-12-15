@@ -4,8 +4,26 @@
 ## How to use it
 
 ```shell
-$ npx babel-node bin/page-loader --output /var/tmp https://ru.hexlet.io/courses
+    $ npx babel-node bin/page-loader --output /var/tmp https://bespoyasov.ru
 ```
+# with logs
+
+```shell
+    $ DEBUG=axios,page-loader npx babel-node bin/page-loader --output /var/tmp https://bespoyasov.ru
+```
+
+## Run test
+
+```shell
+    $ npm test
+```
+
+# with logs
+
+```shell
+    $ DEBUG=nock.*,axios,page-loader npm test
+```
+
 ## Task 1
 [![asciicast](https://asciinema.org/a/aoezGvTzc6RtyVy4otEVUXhoy.svg)](https://asciinema.org/a/aoezGvTzc6RtyVy4otEVUXhoy)
 

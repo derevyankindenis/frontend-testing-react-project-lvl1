@@ -1,5 +1,7 @@
 import fs from 'fs/promises';
 import axios from 'axios';
+// eslint-disable-next-line no-unused-vars
+import ax from 'axios-debug-log';
 import contentTypeParser from 'content-type-parser';
 
 export async function loadFile(url) {

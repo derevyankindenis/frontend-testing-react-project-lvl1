@@ -2,7 +2,10 @@
 /* eslint-disable no-console */
 import { cwd, argv } from 'process';
 import { Command } from 'commander';
+import debug from 'debug';
 import pageLoader from '../src/pageLoader';
+
+const log = debug('page-loader');
 
 const program = new Command();
 
@@ -12,9 +15,9 @@ program
   .option('-o, --output [path]', 'Path to save page', cwd())
   .version('0.1.0')
   .action(async (url, options) => {
-    console.log(`Downloading ${url} ...`);
+    log(`Downloading ${url} ...`);
     const { filepath } = await pageLoader(url, options.output);
-    console.log('Done');
-    console.log(filepath);
+    log('Done');
+    log(filepath);
   })
   .parse(argv);
