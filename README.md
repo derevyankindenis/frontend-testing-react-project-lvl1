@@ -9,7 +9,7 @@
 # with logs
 
 ```shell
-    $ DEBUG=axios,page-loader npx babel-node bin/page-loader --output /var/tmp https://bespoyasov.ru
+    $ DEBUG=axios,page-loader npx babel-node bin/page-loader --output ../page https://bespoyasov.ru
 ```
 
 ## Run test
@@ -32,3 +32,6 @@
 
 ## Task 3
 [![asciicast](https://asciinema.org/a/xwfIDvHTPB6ZvyGqJ35AKKHpv.svg)](https://asciinema.org/a/xwfIDvHTPB6ZvyGqJ35AKKHpv)
+
+## Task 4
+[![asciicast](https://asciinema.org/a/o5xjoftT1JA8P7V1FSmRy7MWj.svg)](https://asciinema.org/a/o5xjoftT1JA8P7V1FSmRy7MWj)
