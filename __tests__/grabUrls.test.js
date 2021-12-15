@@ -8,6 +8,6 @@ const FIXTURE_HTML_PATH = getFixturePath('example.html');
 test('grabUrls', async () => {
   const targetHTML = await fs.readFile(FIXTURE_HTML_PATH, encode);
   const urls = grabUrls(targetHTML);
-  const expectedUrls = ['nodejs.png', 'https://pictures/javascript.jpg'].sort();
+  const expectedUrls = ['nodejs.png', 'https://pictures/javascript.jpg', 'style.css', 'script.js'].sort();
   expect(urls.sort()).toEqual(expectedUrls);
 });

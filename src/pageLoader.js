@@ -59,8 +59,7 @@ export default async function pageLoader(url, savePath) {
   const replaces = {};
   await Promise.all(
     loadedFiles.map((fileInfo) => {
-      const extension = fileInfo.contentType.split('/')[1];
-      const fileName = addExtension(generateName(), `.${extension}`);
+      const fileName = addExtension(generateName(), fileInfo.ext);
       const relativePath = path.join(pathToSaveFiles, fileName);
       replaces[fullUrlToUrl[fileInfo.url]] = relativePath;
       const fullPath = path.join(savePath, relativePath);
