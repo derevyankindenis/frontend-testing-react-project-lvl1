@@ -8,9 +8,7 @@ export default function grabUrls(HTML) {
   const styleURLs = Array.from(
     $('link[rel="stylesheet"]').map((i, el) => $(el).attr('href'))
   );
-  const scriptsURLs = Array.from(
-    $('script[src]').map((i, el) => $(el).attr('src'))
-  );
+  const scriptsURLs = Array.from($('script[src]').map((i, el) => $(el).attr('src')));
   const srcSets = Array.from($('source').map((i, el) => $(el).attr('srcset')));
   const sourceURLs = flatten(
     srcSets.map((set) => parseSrcset(set).map(({ url }) => url))
