@@ -6,7 +6,7 @@
 ```shell
     $ npx babel-node bin/page-loader --output /var/tmp https://bespoyasov.ru
 ```
-# with logs
+### with logs
 
 ```shell
     $ DEBUG=axios,page-loader npx babel-node bin/page-loader --output ../page https://bespoyasov.ru
@@ -18,10 +18,14 @@
     $ npm test
 ```
 
-# with logs
+### with logs
 
 ```shell
     $ DEBUG=nock.*,axios,page-loader npm test
+```
+### with covarage
+```shell
+    $ npm run test-cov
 ```
 
 ## Task 1
@@ -35,3 +39,6 @@
 
 ## Task 4
 [![asciicast](https://asciinema.org/a/o5xjoftT1JA8P7V1FSmRy7MWj.svg)](https://asciinema.org/a/o5xjoftT1JA8P7V1FSmRy7MWj)
+
+## Task 5
+[![asciicast](https://asciinema.org/a/WSiEUcaOjfCHWaFQD3xfyLCUq.svg)](https://asciinema.org/a/WSiEUcaOjfCHWaFQD3xfyLCUq)
