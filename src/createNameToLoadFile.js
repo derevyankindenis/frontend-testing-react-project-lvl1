@@ -2,6 +2,8 @@ import path from 'path';
 import addExtension from './addExtension';
 
 export default function createNameToLoadFile(fileInfo) {
-  const fileName = path.parse(new URL(fileInfo.url).pathname).name;
-  return addExtension(fileName, `${fileInfo.ext}`);
+  const parsedPath = path.parse(new URL(fileInfo.url).pathname);
+  const fileName = parsedPath.name;
+  const ext = fileInfo.ext || parsedPath.ext;
+  return addExtension(fileName, `${ext}`);
 }
