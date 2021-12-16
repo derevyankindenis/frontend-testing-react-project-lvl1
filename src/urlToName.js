@@ -9,8 +9,8 @@ function extractHostWithPath(url) {
 
 /**
  * Make file name for saving page url
- * @param {string} url url of saving page
- * @returns {string} file name
+ * @param {string} url - url of saving page
+ * @returns {string} - valid file name
  */
 export default function urlToName(url) {
   const hostWithPath = extractHostWithPath(url);

@@ -5,21 +5,23 @@ import { loadFile, saveFile } from './loadResource';
 import urlToName from './urlToName';
 import getFullPath from './getFullPath';
 import isAbsoluteURL from './isAbsoluteURL';
-import grabUrls, { replaceUrls } from './grabUrls';
-
-function addExtension(fileName, extension) {
-  return `${fileName}${extension}`;
-}
+import addExtension from './addExtension';
+import createNameToLoadFile from './createNameToLoadFile';
+import isExists from './isExists';
+import { HTMLAlreadyExistsError, NoDirectoryToSaveError } from './Errors';
+import { getUrls, replaceUrls } from './htmlUrlUtils';
 
 async function createDirectoryToFiles(url, mainPath) {
-  const dirToFilesName = addExtension(urlToName(url), '_files');
+  const dirToFilesName = `${urlToName(url)}_files`;
   const savePath = getFullPath(path.join(mainPath, dirToFilesName));
-  await fs.mkdir(savePath);
+  if (!isExists(savePath)) {
+    await fs.mkdir(savePath);
+  }
   return dirToFilesName;
 }
 
 function getHTMLName(url, savePath) {
-  return addExtension(pathToSave(url, savePath), '.html');
+  return addExtension(pathToSave(url, savePath), 'html');
 }
 
 function getAbsoluteUrl(baseUrl, url) {
@@ -31,12 +33,6 @@ async function loadHtml(url) {
   return file;
 }
 
-let namesCount = 0;
-function generateName() {
-  namesCount += 1;
-  return `file_${namesCount}`;
-}
-
 /**
  * Load page by url and save to path
  * @param {string} url page location, url
@@ -44,31 +40,46 @@ function generateName() {
  * @returns {{filepath: string}} object with path to saved page
  */
 export default async function pageLoader(url, savePath) {
+  if (!isExists(savePath)) {
+    throw new NoDirectoryToSaveError(savePath);
+  }
+
+  const filepath = getHTMLName(url, savePath);
+  if (isExists(filepath)) {
+    throw new HTMLAlreadyExistsError(filepath);
+  }
+
   const HTML = await loadHtml(url);
-  const urls = grabUrls(HTML);
+  const urls = getUrls(HTML);
   const pathToSaveFiles = await createDirectoryToFiles(url, savePath);
   const fullUrlToUrl = {};
-  const loadedFiles = await Promise.all(
-    urls.map((u) => {
-      const fullUrl = getAbsoluteUrl(url, u);
-      fullUrlToUrl[fullUrl] = u;
-      return loadFile(fullUrl);
-    })
-  );
+  const loadedFiles = (
+    await Promise.all(
+      urls.map((u) => {
+        const fullUrl = getAbsoluteUrl(url, u);
+        fullUrlToUrl[fullUrl] = u;
+        return loadFile(fullUrl).catch(() => {
+          console.warn('\x1b[33m', `WARNING! ${fullUrl} has not been loaded`);
+        });
+      })
+    )
+  ).filter((a) => a);
 
   const replaces = {};
   await Promise.all(
     loadedFiles.map((fileInfo) => {
-      const fileName = addExtension(generateName(), fileInfo.ext);
+      const fileName = createNameToLoadFile(fileInfo);
       const relativePath = path.join(pathToSaveFiles, fileName);
       replaces[fullUrlToUrl[fileInfo.url]] = relativePath;
       const fullPath = path.join(savePath, relativePath);
-      return saveFile(fileInfo.file, fullPath);
+      return saveFile(fileInfo.file, fullPath).catch(() => {
+        console.warn('\x1b[33m', `WARNING! File ${fileInfo.file} has not been saved`);
+      });
     })
   );
   const newHTML = replaceUrls(HTML, replaces);
 
-  const filepath = getHTMLName(url, savePath);
   await saveFile(newHTML, filepath);
+
   return { filepath };
 }

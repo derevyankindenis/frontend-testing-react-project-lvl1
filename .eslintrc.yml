@@ -14,3 +14,4 @@ parserOptions:
 rules:
   no-underscore-dangle: [2, { "allow": ["__filename", "__dirname"] }]
   comma-dangle: off
+  implicit-arrow-linebreak: off

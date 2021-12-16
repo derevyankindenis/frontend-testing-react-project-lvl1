@@ -16,8 +16,13 @@ program
   .version('0.1.0')
   .action(async (url, options) => {
     log(`Downloading ${url} ...`);
-    const { filepath } = await pageLoader(url, options.output);
-    log('Done');
-    log(filepath);
+    try {
+      const { filepath } = await pageLoader(url, options.output);
+      console.log('\x1b[32m', 'Page has been loaded');
+      console.log('\x1b[32m', filepath);
+    } catch (exeption) {
+      console.error('\x1b[31m', 'ERROR!', exeption.message);
+      process.exit(1);
+    }
   })
   .parse(argv);

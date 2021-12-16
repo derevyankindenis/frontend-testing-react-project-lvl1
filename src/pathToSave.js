@@ -5,10 +5,10 @@ import getFullPath from './getFullPath';
 
 /**
  * Return full path to save loaded html page
- * @param {string} url page url
- * @param {string} extension file extension
- * @param {string} targetPath target path to save page
- * @returns {string}
+ * @param {string} url - page url
+ * @param {string} extension - file extension
+ * @param {string} targetPath - target path to save page
+ * @returns {string} - full path to save file
  */
 export default function pathToSave(url, targetPath = cwd()) {
   const fileName = urlToName(url);
