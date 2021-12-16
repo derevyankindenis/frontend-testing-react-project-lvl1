@@ -77,7 +77,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  await fs.rmdir(DIR_TO_RUN_TEST, { recursive: true }).catch(noop);
+  await fs.rm(DIR_TO_RUN_TEST, { recursive: true }).catch(noop);
   nock.enableNetConnect();
 });
 
@@ -85,7 +85,7 @@ afterEach(async () => {
   nock.cleanAll();
   await Promise.all([
     fs.unlink(PATH_TO_HTML),
-    fs.rmdir(PATH_TO_FILES, { recursive: true }),
+    fs.rm(PATH_TO_FILES, { recursive: true }),
   ]).catch(noop);
 });
 
