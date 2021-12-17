@@ -17,8 +17,14 @@ function getExtension(url, response) {
   return parsedPath.ext.split('.')[1];
 }
 
+function getFullUrl(url, baseUrl) {
+  const firstPart = baseUrl[baseUrl.length - 1] === '/' ? baseUrl.slice(-1) : baseUrl;
+  const secondPart = url[0] === '/' ? url.slice(1) : url;
+  return [firstPart, secondPart].join('/');
+}
+
 export async function loadFile(url, baseUrl) {
-  const fullUrl = isAbsoluteURL(url) ? url : [baseUrl, url].join('/');
+  const fullUrl = isAbsoluteURL(url) ? url : getFullUrl(url, baseUrl);
 
   log(`Loading ${fullUrl}`);
   return axios
