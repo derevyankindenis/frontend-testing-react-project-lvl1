@@ -11,10 +11,9 @@ function replaceSymbols(str) {
 function extractHostWithPath(url) {
   if (isAbsoluteURL(url)) {
     const { host, pathname } = new URL(url);
-    return `${host}${pathname}`;
+    return `${host}${extractExtension(pathname)}`;
   }
-  const extrExt = extractExtension(url);
-  return extrExt[0] === '/' ? extrExt.slice(1) : extrExt;
+  return url[0] === '/' ? url.slice(1) : url;
 }
 
 /**

@@ -4,15 +4,11 @@ import isSameOrigin from './isSameOrigin';
 import urlToName from './urlToName';
 
 function createName(fileInfo) {
-  if (fileInfo.fullUrl === fileInfo.url) {
-    if (isSameOrigin(fileInfo.url, fileInfo.baseUrl)) {
-      const relativeUrl = fileInfo.url.slice(fileInfo.baseUrl.length + 1);
-      return urlToName(relativeUrl);
-    }
-    const parsedPath = path.parse(new URL(fileInfo.url).pathname);
-    return parsedPath.name;
+  if (isSameOrigin(fileInfo.fullUrl, fileInfo.baseUrl)) {
+    return urlToName(fileInfo.fullUrl);
   }
-  return urlToName(fileInfo.url);
+  const parsedPath = path.parse(new URL(fileInfo.url).pathname);
+  return parsedPath.name;
 }
 
 export default function createNameToLoadFile(fileInfo) {

@@ -5,7 +5,7 @@ import { parseSrcset, stringifySrcset } from './vendor/srcset';
 const SELECTOR_TO_SRC_ATTR = {
   img: 'src',
   source: 'srcset',
-  'link[rel="stylesheet"]': 'href',
+  'link[href]': 'href',
   'script[src]': 'src',
 };
 

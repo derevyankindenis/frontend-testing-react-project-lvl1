@@ -35,18 +35,6 @@ describe('createNameToLoadFile', () => {
       ext: 'png',
     };
     const name = createNameToLoadFile(fileInfo);
-    expect(name).toEqual('sys-col-img-file.png');
-  });
-
-  test('should return valid name to local resources by relative url', () => {
-    const fileInfo = {
-      url: '/sys/col/img/file.png',
-      fullUrl: 'https://example.com/page/sys/col/img/file.png',
-      baseUrl: 'https://example.com/page',
-      file: 'pngContent',
-      ext: 'png',
-    };
-    const name = createNameToLoadFile(fileInfo);
-    expect(name).toEqual('sys-col-img-file.png');
+    expect(name).toEqual('example-com-page-sys-col-img-file.png');
   });
 });

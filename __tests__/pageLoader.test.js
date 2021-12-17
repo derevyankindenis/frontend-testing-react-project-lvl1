@@ -34,7 +34,7 @@ let ASSETS = [
   {
     fixturePath: getFixturePath('nodejs.png'),
     contentType: { 'Content-Type': 'image/png' },
-    fileName: 'nodejs.png',
+    fileName: 'example-com-page-nodejs.png',
     url: 'https://example.com/page/nodejs.png',
     isGlobal: false,
   },
@@ -48,17 +48,24 @@ let ASSETS = [
   {
     fixturePath: getFixturePath('style.css'),
     contentType: { 'Content-Type': 'text/css' },
-    fileName: 'style.css',
+    fileName: 'example-com-page-style.css',
     url: 'https://example.com/page/style.css',
     isGlobal: false,
   },
   {
     fixturePath: getFixturePath('script.js'),
     contentType: { 'Content-Type': 'application/javascript' },
-    fileName: 'scripts-main-script.js',
+    fileName: 'example-com-page-scripts-main-script.js',
     url: 'https://example.com/page/scripts/main/script.js',
     isGlobal: false,
   },
+  {
+    fixturePath: getFixturePath('example.html'),
+    contentType: { 'Content-Type': 'text/html' },
+    fileName: 'example-com-page-blog-about.html',
+    url: 'https://example.com/page/blog/about',
+    isGlobal: false,
+  }
 ];
 
 async function initAsset(asset) {
