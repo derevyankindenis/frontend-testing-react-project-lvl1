@@ -1,29 +1,42 @@
 import fs from 'fs/promises';
 import axios from 'axios';
+import path from 'path';
 // eslint-disable-next-line no-unused-vars
 import axiosDebug from 'axios-debug-log';
 import mime from 'mime-types';
 import debug from 'debug';
 import { FileCantBeLoadedError, FileCantBeSavedError } from './Errors';
+import isAbsoluteURL from './isAbsoluteURL';
 
 const log = debug('page-loader');
 
-export async function loadFile(url) {
-  log(`Loading ${url}`);
+function getExtension(url, response) {
+  const ext = mime.extension(response.headers['content-type']);
+  if (ext) return ext;
+  const parsedPath = path.parse(new URL(url).pathname);
+  return parsedPath.ext.split('.')[1];
+}
+
+export async function loadFile(url, baseUrl) {
+  const fullUrl = isAbsoluteURL(url) ? url : [baseUrl, url].join('/');
+
+  log(`Loading ${fullUrl}`);
   return axios
-    .get(url, { responseType: 'arraybuffer' })
+    .get(fullUrl, { responseType: 'arraybuffer' })
     .then((response) => {
-      log(`Loaded ${url}`);
-      const ext = mime.extension(response.headers['content-type']);
+      log(`Loaded ${fullUrl}`);
+      const ext = getExtension(url, response);
       return {
         file: response.data,
+        fullUrl,
         url,
+        baseUrl,
         ext,
       };
     })
     .catch((e) => {
       log(e);
-      throw new FileCantBeLoadedError(url);
+      throw new FileCantBeLoadedError(fullUrl);
     });
 }
 

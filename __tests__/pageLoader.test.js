@@ -36,26 +36,28 @@ let ASSETS = [
     contentType: { 'Content-Type': 'image/png' },
     fileName: 'nodejs.png',
     url: 'https://example.com/page/nodejs.png',
+    isGlobal: false,
   },
   {
     fixturePath: getFixturePath('javascript.jpg'),
     contentType: { 'Content-Type': 'image/jpeg' },
-    fileName: 'file.jpeg',
-    url: 'https://cdn2.hexlet.io',
-    uri: '/derivations/image/fill_jpg/540/320/file',
-    query: { signature: '5971e' },
+    fileName: 'javascript.jpg',
+    url: 'https://cdn2.hexlet.io/javascript.jpg',
+    isGlobal: true,
   },
   {
     fixturePath: getFixturePath('style.css'),
     contentType: { 'Content-Type': 'text/css' },
     fileName: 'style.css',
     url: 'https://example.com/page/style.css',
+    isGlobal: false,
   },
   {
     fixturePath: getFixturePath('script.js'),
     contentType: { 'Content-Type': 'application/javascript' },
-    fileName: 'script.js',
-    url: 'https://example.com/page/script.js',
+    fileName: 'scripts-main-script.js',
+    url: 'https://example.com/page/scripts/main/script.js',
+    isGlobal: false,
   },
 ];
 
@@ -91,11 +93,9 @@ afterEach(async () => {
 
 describe('pageLoader', () => {
   test('Load and save html page to define directory', async () => {
-    const assetsRequests = ASSETS.map((asset) =>
-      nock(asset.url)
-        .get(asset.uri || '')
-        .query(asset.query || {})
-        .replyWithFile(200, asset.fixturePath, asset.contentType));
+    const localAssets = ASSETS.filter((asset) => !asset.isGlobal);
+    const assetsRequests = localAssets.map((asset) =>
+      nock(asset.url).get('').replyWithFile(200, asset.fixturePath, asset.contentType));
 
     const mainReq = nock(TEST_URL)
       .get('')
@@ -114,9 +114,9 @@ describe('pageLoader', () => {
       expect(request.isDone()).toBeTruthy();
     });
 
-    ASSETS.forEach((asset) => expect(isExists(asset.pathAfterSave)).toBeTruthy());
+    localAssets.forEach((asset) => expect(isExists(asset.pathAfterSave)).toBeTruthy());
     const fileContents = await Promise.all(
-      ASSETS.map((asset) =>
+      localAssets.map((asset) =>
         fs
           .readFile(asset.pathAfterSave, encodeUTF8)
           .then((file) => ({ resultFile: file, expectedFile: asset.content })))

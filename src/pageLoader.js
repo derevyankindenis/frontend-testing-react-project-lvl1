@@ -1,5 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
+import debug from 'debug';
 import pathToSave from './pathToSave';
 import { loadFile, saveFile } from './loadResource';
 import urlToName from './urlToName';
@@ -10,6 +11,10 @@ import createNameToLoadFile from './createNameToLoadFile';
 import isExists from './isExists';
 import { HTMLAlreadyExistsError, NoDirectoryToSaveError } from './Errors';
 import { getUrls, replaceUrls } from './htmlUrlUtils';
+import isSameOrigin from './isSameOrigin';
+import slash from './vendor/slash';
+
+const log = debug('page-loader');
 
 async function createDirectoryToFiles(url, mainPath) {
   const dirToFilesName = `${urlToName(url)}_files`;
@@ -24,7 +29,7 @@ function getHTMLName(url, savePath) {
   return addExtension(pathToSave(url, savePath), 'html');
 }
 
-function getAbsoluteUrl(baseUrl, url) {
+function getAbsoluteUrl(url, baseUrl) {
   return isAbsoluteURL(url) ? url : new URL(url, `${baseUrl}/`).toString();
 }
 
@@ -37,9 +42,10 @@ async function loadHtml(url) {
  * Load page by url and save to path
  * @param {string} url page location, url
  * @param {string} pathToSave path to save page
+ * @param {boolean} loadGlobalResurces - load global resources or no
  * @returns {{filepath: string}} object with path to saved page
  */
-export default async function pageLoader(url, savePath) {
+export default async function pageLoader(url, savePath, loadGlobalResurces = false) {
   if (!isExists(savePath)) {
     throw new NoDirectoryToSaveError(savePath);
   }
@@ -50,32 +56,32 @@ export default async function pageLoader(url, savePath) {
   }
 
   const HTML = await loadHtml(url);
-  const urls = getUrls(HTML);
+  const filterURLs = loadGlobalResurces
+    ? () => true
+    : (urlFromHtml) => isSameOrigin(url, getAbsoluteUrl(urlFromHtml, url));
+  const urls = getUrls(HTML).filter(filterURLs);
+
   const pathToSaveFiles = await createDirectoryToFiles(url, savePath);
-  const fullUrlToUrl = {};
-  const loadedFiles = (
-    await Promise.all(
-      urls.map((u) => {
-        const fullUrl = getAbsoluteUrl(url, u);
-        fullUrlToUrl[fullUrl] = u;
-        return loadFile(fullUrl).catch(() => {
-          console.warn('\x1b[33m', `WARNING! ${fullUrl} has not been loaded`);
-        });
-      })
-    )
-  ).filter((a) => a);
+  const loadedFiles = await Promise.all(
+    urls.map((u) =>
+      loadFile(u, url).catch(() => {
+        log('\x1b[33m', `WARNING! ${u} has not been loaded`);
+      }))
+  );
 
   const replaces = {};
   await Promise.all(
-    loadedFiles.map((fileInfo) => {
-      const fileName = createNameToLoadFile(fileInfo);
-      const relativePath = path.join(pathToSaveFiles, fileName);
-      replaces[fullUrlToUrl[fileInfo.url]] = relativePath;
-      const fullPath = path.join(savePath, relativePath);
-      return saveFile(fileInfo.file, fullPath).catch(() => {
-        console.warn('\x1b[33m', `WARNING! File ${fileInfo.file} has not been saved`);
-      });
-    })
+    loadedFiles
+      .filter((a) => a)
+      .map((fileInfo) => {
+        const fileName = createNameToLoadFile(fileInfo);
+        const relativePath = slash(path.join(pathToSaveFiles, fileName));
+        replaces[fileInfo.url] = relativePath;
+        const fullPath = path.join(savePath, relativePath);
+        return saveFile(fileInfo.file, fullPath).catch(() => {
+          log('\x1b[33m', `WARNING! File ${fileInfo.file} has not been saved`);
+        });
+      })
   );
   const newHTML = replaceUrls(HTML, replaces);
 
