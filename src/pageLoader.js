@@ -47,9 +47,6 @@ async function loadHtml(url) {
  * @returns {{filepath: string}} object with path to saved page
  */
 export default async function pageLoader(url, savePath, loadGlobalResurces = false) {
-  console.log(url, savePath);
-  console.log(path);
-
   if (!isExists(savePath)) {
     throw new NoDirectoryToSaveError(savePath);
   }
