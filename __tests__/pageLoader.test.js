@@ -9,12 +9,11 @@ import pageLoader from '../src/pageLoader';
 import isExists from '../src/isExists';
 import {
   FileCantBeLoadedError,
-  // FileCantBeSavedError,
   NoDirectoryToSaveError,
   HTMLAlreadyExistsError,
 } from '../src/Errors';
 
-const TEST_URL = 'https://example.com/page';
+const TEST_URL = 'https://example.com/page/';
 const DIR_TO_RUN_TEST = mkDirToRunTests();
 
 const HTML_FILE_NAME = 'example-com-page.html';
@@ -35,7 +34,7 @@ let ASSETS = [
     fixturePath: getFixturePath('nodejs.png'),
     contentType: { 'Content-Type': 'image/png' },
     fileName: 'example-com-page-nodejs.png',
-    url: 'https://example.com/page/nodejs.png',
+    url: 'https://example.com/nodejs.png',
     isGlobal: false,
   },
   {
@@ -49,21 +48,21 @@ let ASSETS = [
     fixturePath: getFixturePath('style.css'),
     contentType: { 'Content-Type': 'text/css' },
     fileName: 'example-com-page-style.css',
-    url: 'https://example.com/page/style.css',
+    url: 'https://example.com/style.css',
     isGlobal: false,
   },
   {
     fixturePath: getFixturePath('script.js'),
     contentType: { 'Content-Type': 'application/javascript' },
     fileName: 'example-com-page-scripts-main-script.js',
-    url: 'https://example.com/page/scripts/main/script.js',
+    url: 'https://example.com/scripts/main/script.js',
     isGlobal: false,
   },
   {
     fixturePath: getFixturePath('example.html'),
     contentType: { 'Content-Type': 'text/html' },
     fileName: 'example-com-page-blog-about.html',
-    url: 'https://example.com/page/blog/about',
+    url: 'https://example.com/blog/about',
     isGlobal: false,
   }
 ];
@@ -105,7 +104,7 @@ describe('pageLoader', () => {
       nock(asset.url).get('').replyWithFile(200, asset.fixturePath, asset.contentType));
 
     const mainReq = nock(TEST_URL)
-      .get('')
+      .get('/')
       .replyWithFile(200, FIXTURE_HTML_PATH_BEFORE, CONTENT_TYPE_HTML);
 
     const result = await pageLoader(TEST_URL, DIR_TO_RUN_TEST);
@@ -134,7 +133,7 @@ describe('pageLoader', () => {
 
   test("throw exeption if main url isn't avaliable", async () => {
     expect.assertions(1);
-    nock(TEST_URL).get('').reply(404);
+    nock(TEST_URL).get('/').reply(404);
     await expect(pageLoader(TEST_URL, DIR_TO_RUN_TEST)).rejects.toThrow(
       FileCantBeLoadedError
     );
@@ -144,7 +143,7 @@ describe('pageLoader', () => {
     expect.assertions(1);
     const notExistsDir = path.join(DIR_TO_RUN_TEST, 'noExists');
     nock(TEST_URL)
-      .get('')
+      .get('/')
       .replyWithFile(200, FIXTURE_HTML_PATH_BEFORE, CONTENT_TYPE_HTML);
     await expect(pageLoader(TEST_URL, notExistsDir)).rejects.toThrow(
       NoDirectoryToSaveError
@@ -162,7 +161,7 @@ describe('pageLoader', () => {
   test("doesn't throw if any assets isn't avaliable", async () => {
     expect.assertions(1);
     nock(TEST_URL)
-      .get('')
+      .get('/')
       .replyWithFile(200, FIXTURE_HTML_PATH_BEFORE, CONTENT_TYPE_HTML);
     await expect(pageLoader(TEST_URL, DIR_TO_RUN_TEST)).resolves.toEqual({
       filepath: PATH_TO_HTML,

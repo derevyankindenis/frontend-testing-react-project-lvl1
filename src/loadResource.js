@@ -24,7 +24,7 @@ function getFullUrl(url, baseUrl) {
 }
 
 export async function loadFile(url, baseUrl) {
-  const fullUrl = isAbsoluteURL(url) ? url : getFullUrl(url, baseUrl);
+  const fullUrl = isAbsoluteURL(url) ? url : getFullUrl(url, new URL(baseUrl).origin);
 
   log(`Loading ${fullUrl}`);
   return axios

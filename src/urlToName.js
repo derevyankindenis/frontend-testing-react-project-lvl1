@@ -1,5 +1,9 @@
 import isAbsoluteURL from './isAbsoluteURL';
 
+function isNotSlash(char) {
+  return char !== '/';
+}
+
 function extractExtension(url) {
   return url.split('.')[0];
 }
@@ -13,7 +17,13 @@ function extractHostWithPath(url) {
     const { host, pathname } = new URL(url);
     return `${host}${extractExtension(pathname)}`;
   }
-  return url[0] === '/' ? url.slice(1) : url;
+  return url;
+}
+
+function removeSlashes(url) {
+  const startIndex = [...url].findIndex(isNotSlash);
+  const endIndex = url.length - [...url].reverse().findIndex(isNotSlash);
+  return url.slice(startIndex, endIndex);
 }
 
 /**
@@ -22,6 +32,6 @@ function extractHostWithPath(url) {
  * @returns {string} - valid file name
  */
 export default function urlToName(url) {
-  const hostWithPath = extractHostWithPath(url);
+  const hostWithPath = extractHostWithPath(removeSlashes(url));
   return replaceSymbols(hostWithPath);
 }

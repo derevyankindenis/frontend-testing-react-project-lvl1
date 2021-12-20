@@ -1,6 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 import debug from 'debug';
+import joinURLs from 'url-join';
 import pathToSave from './pathToSave';
 import { loadFile, saveFile } from './loadResource';
 import urlToName from './urlToName';
@@ -30,7 +31,7 @@ function getHTMLName(url, savePath) {
 }
 
 function getAbsoluteUrl(url, baseUrl) {
-  return isAbsoluteURL(url) ? url : new URL(url, `${baseUrl}/`).toString();
+  return isAbsoluteURL(url) ? url : joinURLs(baseUrl, url);
 }
 
 async function loadHtml(url) {
