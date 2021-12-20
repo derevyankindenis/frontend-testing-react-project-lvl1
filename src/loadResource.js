@@ -15,7 +15,7 @@ function getExtension(url, response) {
   const ext = mime.extension(response.headers['content-type']);
   if (ext) return ext;
   const parsedPath = path.parse(new URL(url).pathname);
-  return parsedPath.ext.split('.')[1];
+  return parsedPath.ext.split('.')[1] || 'html';
 }
 
 export async function loadFile(url, baseUrl) {
