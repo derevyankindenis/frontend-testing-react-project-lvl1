@@ -33,7 +33,7 @@ let ASSETS = [
   {
     fixturePath: getFixturePath('nodejs.png'),
     contentType: { 'Content-Type': 'image/png' },
-    fileName: 'example-com-page-nodejs.png',
+    fileName: 'example-com-nodejs.png',
     url: 'https://example.com/nodejs.png',
     isGlobal: false,
   },
@@ -48,20 +48,20 @@ let ASSETS = [
     fixturePath: getFixturePath('style.css'),
     contentType: { 'Content-Type': 'text/css' },
     fileName: 'example-com-page-style.css',
-    url: 'https://example.com/style.css',
+    url: 'https://example.com/page/style.css',
     isGlobal: false,
   },
   {
     fixturePath: getFixturePath('script.js'),
     contentType: { 'Content-Type': 'application/javascript' },
-    fileName: 'example-com-page-scripts-main-script.js',
+    fileName: 'example-com-scripts-main-script.js',
     url: 'https://example.com/scripts/main/script.js',
     isGlobal: false,
   },
   {
     fixturePath: getFixturePath('example.html'),
     contentType: { 'Content-Type': 'text/html' },
-    fileName: 'example-com-page-blog-about.html',
+    fileName: 'example-com-blog-about.html',
     url: 'https://example.com/blog/about',
     isGlobal: false,
   }

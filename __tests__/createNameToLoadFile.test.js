@@ -1,6 +1,7 @@
 import createNameToLoadFile from '../src/createNameToLoadFile';
 
 describe('createNameToLoadFile', () => {
+  //TODO: некорректно
   test('should return valid name to global resources', () => {
     const fileInfo = {
       fullUrl:
@@ -14,6 +15,7 @@ describe('createNameToLoadFile', () => {
     expect(name).toEqual('file.webp');
   });
 
+  //TODO: некорректно
   test('should return valid name to global resources with file extension', () => {
     const fileInfo = {
       fullUrl: 'https://cdn2.hexlet.io/file.webp',
@@ -36,5 +38,29 @@ describe('createNameToLoadFile', () => {
     };
     const name = createNameToLoadFile(fileInfo);
     expect(name).toEqual('example-com-page-sys-col-img-file.png');
+  });
+
+  test('should return valid name to local resources by relative url with path', () => {
+    const fileInfo = {
+      url: '/page/blog/sys/col/img/file.png',
+      fullUrl: 'https://example.com/sys/col/img/file.png',
+      baseUrl: 'https://example.com/page/blog/',
+      file: 'pngContent',
+      ext: 'png',
+    };
+    const name = createNameToLoadFile(fileInfo);
+    expect(name).toEqual('example-com-sys-col-img-file.png');
+  });
+
+  test('should return valid name to local resources by relative url without path', () => {
+    const fileInfo = {
+      url: 'file.png',
+      fullUrl: 'https://example.com/file.png',
+      baseUrl: 'https://example.com/page/blog/',
+      file: 'pngContent',
+      ext: 'png',
+    };
+    const name = createNameToLoadFile(fileInfo);
+    expect(name).toEqual('example-com-file.png');
   });
 });

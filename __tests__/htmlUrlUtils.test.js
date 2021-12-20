@@ -12,7 +12,7 @@ describe('htmlUrlUtils', () => {
     const urls = getUrls(targetHTML);
     const expectedUrls = [
       'nodejs.png',
-      'style.css',
+      '/page/style.css',
       'scripts/main/script.js',
       'file_is_not_exists.js',
       '/blog/about',
@@ -25,10 +25,10 @@ describe('htmlUrlUtils', () => {
     const targetHTML = await fs.readFile(FIXTURE_HTML_BEFORE_PATH, encodeUTF8);
     const expectedHTML = await fs.readFile(FIXTURE_HTML_AFTER_PATH, encodeUTF8);
     const replaces = {
-      'nodejs.png': 'example-com-page_files/example-com-page-nodejs.png',
-      'style.css': 'example-com-page_files/example-com-page-style.css',
-      'scripts/main/script.js': 'example-com-page_files/example-com-page-scripts-main-script.js',
-      '/blog/about': 'example-com-page_files/example-com-page-blog-about.html'
+      'nodejs.png': 'example-com-page_files/example-com-nodejs.png',
+      '/page/style.css': 'example-com-page_files/example-com-page-style.css',
+      'scripts/main/script.js': 'example-com-page_files/example-com-scripts-main-script.js',
+      '/blog/about': 'example-com-page_files/example-com-blog-about.html'
     };
     const resultHTML = replaceUrls(targetHTML, replaces);
     expect(resultHTML).toEqual(expectedHTML);
