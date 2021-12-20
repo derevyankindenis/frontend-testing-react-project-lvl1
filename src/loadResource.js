@@ -1,6 +1,7 @@
 import fs from 'fs/promises';
 import axios from 'axios';
 import path from 'path';
+import joinURLs from 'url-join';
 // eslint-disable-next-line no-unused-vars
 import axiosDebug from 'axios-debug-log';
 import mime from 'mime-types';
@@ -17,21 +18,15 @@ function getExtension(url, response) {
   return parsedPath.ext.split('.')[1];
 }
 
-function getFullUrl(url, baseUrl) {
-  const firstPart = baseUrl[baseUrl.length - 1] === '/' ? baseUrl.slice(-1) : baseUrl;
-  const secondPart = url[0] === '/' ? url.slice(1) : url;
-  return [firstPart, secondPart].join('/');
-}
-
 export async function loadFile(url, baseUrl) {
-  const fullUrl = isAbsoluteURL(url) ? url : getFullUrl(url, new URL(baseUrl).origin);
+  const fullUrl = isAbsoluteURL(url) ? url : joinURLs(new URL(baseUrl).origin, url);
 
   log(`Loading ${fullUrl}`);
   return axios
     .get(fullUrl, { responseType: 'arraybuffer' })
     .then((response) => {
       log(`Loaded ${fullUrl}`);
-      const ext = getExtension(url, response);
+      const ext = getExtension(fullUrl, response);
       return {
         file: response.data,
         fullUrl,
