@@ -18,8 +18,7 @@ import slash from './vendor/slash';
 const log = debug('page-loader');
 
 async function createDirectoryToFiles(url, mainPath) {
-  log(url);
-  log(mainPath);
+  log(`### createDirectoryToFiles ${url} // ${mainPath}`);
   const dirToFilesName = `${urlToName(url)}_files`;
   const savePath = getFullPath(path.join(mainPath, dirToFilesName));
   if (!isExists(savePath)) {
@@ -49,6 +48,7 @@ async function loadHtml(url) {
  * @returns {{filepath: string}} object with path to saved page
  */
 export default async function pageLoader(url, savePath, loadGlobalResurces = false) {
+  log(`### createDirectoryToFiles ${url} // ${savePath} // ${loadGlobalResurces}`);
   if (!isExists(savePath)) {
     throw new NoDirectoryToSaveError(savePath);
   }
