@@ -10,6 +10,7 @@ import getFullPath from './getFullPath';
  * @param {string} targetPath - target path to save page
  * @returns {string} - full path to save file
  */
+// TODO: remove cwd param
 export default function pathToSave(url, targetPath = cwd()) {
   const fileName = urlToName(url);
   return getFullPath(path.join(targetPath, fileName));
