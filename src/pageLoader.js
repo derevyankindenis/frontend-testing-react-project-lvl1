@@ -18,6 +18,8 @@ import slash from './vendor/slash';
 const log = debug('page-loader');
 
 async function createDirectoryToFiles(url, mainPath) {
+  log(url);
+  log(mainPath);
   const dirToFilesName = `${urlToName(url)}_files`;
   const savePath = getFullPath(path.join(mainPath, dirToFilesName));
   if (!isExists(savePath)) {
