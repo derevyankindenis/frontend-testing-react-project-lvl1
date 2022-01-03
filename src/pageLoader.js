@@ -53,7 +53,9 @@ export default async function pageLoader(url, savePath = cwd()) {
   await loadAndSave(url, filepath, transform);
   await Promise.all(
     Object.entries(urls).map(([from, to]) =>
-      loadAndSave(from, getFullPath(path.join(savePath, to)))
+      loadAndSave(from, getFullPath(path.join(savePath, to))).catch((e) => {
+        log("\x1b[33m", `WARNING! has not been loaded \n ${savePath} \n ${to} \n ${e}`);
+      })
     )
   );
 
