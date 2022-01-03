@@ -26,3 +26,10 @@ export class NoDirectoryToSaveError extends Error {
     super(message);
   }
 }
+
+export class InvalidURLError extends Error {
+  constructor(url) {
+    const message = `${url} is invalid URL`;
+    super(message);
+  }
+}

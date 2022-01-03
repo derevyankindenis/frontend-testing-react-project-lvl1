@@ -1,13 +1,14 @@
 env:
-  browser: true
   es2021: true
+  node: true
 extends:
-  - eslint:recommended
-  - 'airbnb-base'
-  - 'plugin:jest/recommended'
-
+  - "eslint:recommended"
+  - "airbnb-base"
+  - "plugin:jest/recommended"
+  - "prettier"
 plugins:
   - jest
+  - prettier
 parserOptions:
   ecmaVersion: 13
   sourceType: module
@@ -16,3 +17,4 @@ rules:
   comma-dangle: off
   implicit-arrow-linebreak: off
   linebreak-style: off
+  prettier/prettier: ["warn", { endOfLine: "crlf" }]
