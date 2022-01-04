@@ -82,8 +82,6 @@ afterEach(async () => {
 
 describe("positive cases", () => {
   test("load main html", async () => {
-    // eslint-disable-next-line no-console
-    console.log(pageLoader.toString());
     const result = await pageLoader(FULL_URL, DIR_TO_RUN_TEST);
     const expectedHTML = await fs.readFile(FIXTURE_HTML_PATH_AFTER, encode);
     const resultHTML = await fs.readFile(result.filepath, encode);
