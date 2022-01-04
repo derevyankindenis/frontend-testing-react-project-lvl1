@@ -143,4 +143,14 @@ describe("pageLoader tests", () => {
       FileCantBeLoadedError
     );
   });
+
+  test("throw exeption if assets url doesn't avaliable", async () => {
+    nock("https://site.com")
+      .get("/blog/about")
+      .replyWithFile(200, FIXTURE_HTML_PATH_BEFORE, { "Content-Type": "text/html" });
+    ASSETS.map((asset) => nock(asset.url).get("").reply(404, {}));
+    await expect(pageLoader(MAIN_URL, DIR_TO_RUN_TEST)).rejects.toThrow(
+      FileCantBeLoadedError
+    );
+  });
 });

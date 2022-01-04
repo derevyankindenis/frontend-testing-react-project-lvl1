@@ -59,7 +59,3 @@ export default async function pageLoader(url, savePath = cwd()) {
 
   return Promise.resolve({ filepath });
 }
-
-// .catch((e) => {
-//   log("\x1b[33m", `WARNING! has not been loaded \n ${savePath} \n ${to} \n ${e}`);
-// })
