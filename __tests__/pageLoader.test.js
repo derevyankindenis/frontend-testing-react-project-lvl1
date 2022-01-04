@@ -97,7 +97,20 @@ describe("pageLoader tests", () => {
     });
 
     ASSETS.forEach((asset) => expect(isExists(asset.pathAfterSave)).toBeTruthy());
-  }, 10000000);
+
+    const fileContents = await Promise.all(
+      ASSETS.map((asset) =>
+        Promise.all([
+          fs.readFile(asset.pathAfterSave, encode),
+          fs.readFile(asset.fixturePath, encode),
+        ]).then(([resultFile, expectedFile]) => ({ resultFile, expectedFile }))
+      )
+    );
+
+    fileContents.forEach(({ resultFile, expectedFile }) =>
+      expect(resultFile).toEqual(expectedFile)
+    );
+  });
 
   test("throw exeption if html can't be saved", async () => {
     expect.assertions(1);

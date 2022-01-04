@@ -9,7 +9,7 @@ import { FileCantBeSavedError, FileCantBeLoadedError } from "../src/Errors";
 const FILE_NAME = "site-com-blog-about.html";
 const FIXTURE_FILE_PATH = getFixturePath(FILE_NAME);
 const DIR_TO_RUN_TEST = generatePathToRunTests();
-const URL = "https://example.com/";
+const URL = "https://example.com";
 
 beforeAll(async () => {
   nock.disableNetConnect();
