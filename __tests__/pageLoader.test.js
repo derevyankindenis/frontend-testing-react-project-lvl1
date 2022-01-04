@@ -136,21 +136,27 @@ describe("pageLoader tests", () => {
     );
   });
 
-  test("throw exeption if main url doesn't avaliable", async () => {
-    expect.assertions(1);
-    nock(MAIN_URL).get("/").reply(404);
-    await expect(pageLoader(MAIN_URL, DIR_TO_RUN_TEST)).rejects.toThrow(
-      FileCantBeLoadedError
-    );
-  });
+  test.each([404, 500, 503])(
+    "throw exeption if main url doesn't avaliable, server returns %d",
+    async (code) => {
+      expect.assertions(1);
+      nock(MAIN_URL).get("/").reply(code);
+      await expect(pageLoader(MAIN_URL, DIR_TO_RUN_TEST)).rejects.toThrow(
+        FileCantBeLoadedError
+      );
+    }
+  );
 
-  test("throw exeption if assets url doesn't avaliable", async () => {
-    nock("https://site.com")
-      .get("/blog/about")
-      .replyWithFile(200, FIXTURE_HTML_PATH_BEFORE, { "Content-Type": "text/html" });
-    ASSETS.map((asset) => nock(asset.url).get("").reply(404, {}));
-    await expect(pageLoader(MAIN_URL, DIR_TO_RUN_TEST)).rejects.toThrow(
-      FileCantBeLoadedError
-    );
-  });
+  test.each([404, 500, 503])(
+    "throw exeption if assets url doesn't avaliable, server returns %d",
+    async (code) => {
+      nock("https://site.com")
+        .get("/blog/about")
+        .replyWithFile(200, FIXTURE_HTML_PATH_BEFORE, { "Content-Type": "text/html" });
+      ASSETS.map((asset) => nock(asset.url).get("").reply(code, {}));
+      await expect(pageLoader(MAIN_URL, DIR_TO_RUN_TEST)).rejects.toThrow(
+        FileCantBeLoadedError
+      );
+    }
+  );
 });
