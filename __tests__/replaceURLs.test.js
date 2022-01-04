@@ -10,6 +10,7 @@ const REPLACES = {
     "site-com-blog-about_files/site-com-blog-about-assets-styles.css",
   "/blog/about": "site-com-blog-about_files/site-com-blog-about.html",
   "/photos/me.jpg": "site-com-blog-about_files/site-com-photos-me.jpg",
+  "/photos/me2.jpg": "site-com-blog-about_files/site-com-photos-me2.jpg",
   "https://site.com/assets/scripts.js":
     "site-com-blog-about_files/site-com-assets-scripts.js",
 };

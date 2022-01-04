@@ -15,6 +15,7 @@ const EXPECTED_URLS = {
   "https://site.com/photos/me.jpg": "site-com-blog-about_files/site-com-photos-me.jpg",
   "https://site.com/assets/scripts.js":
     "site-com-blog-about_files/site-com-assets-scripts.js",
+  "https://site.com/photos/me2.jpg": "site-com-blog-about_files/site-com-photos-me2.jpg",
 };
 
 test("useTransformHTML", async () => {
