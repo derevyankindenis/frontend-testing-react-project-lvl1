@@ -136,7 +136,7 @@ describe("pageLoader tests", () => {
     );
   });
 
-  test.each([404, 500, 503])(
+  test.each([401, 403, 404, 500, 503])(
     "throw exeption if main url doesn't avaliable, server returns %d",
     async (code) => {
       expect.assertions(1);
@@ -147,7 +147,7 @@ describe("pageLoader tests", () => {
     }
   );
 
-  test.each([404, 500, 503])(
+  test.each([401, 403, 404, 500, 503])(
     "throw exeption if assets url doesn't avaliable, server returns %d",
     async (code) => {
       nock("https://site.com")
