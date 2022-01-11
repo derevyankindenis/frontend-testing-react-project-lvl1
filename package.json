@@ -2,7 +2,7 @@
   "name": "@hexlet/code",
   "version": "0.1.0",
   "description": "Utility to load and save web pages",
-  "main": "src/index.js",
+  "main": "./index.js",
   "scripts": {
     "test": "jest --colors",
     "lint": "eslint .",
