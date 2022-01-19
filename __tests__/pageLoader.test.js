@@ -2,7 +2,7 @@ import path from "path";
 import fs from "fs/promises";
 import nock from "nock";
 import rimraf from "rimraf";
-import pageLoader from "../index";
+import pageLoader from "../src/pageLoader";
 import {
   NoDirectoryToSaveError,
   InvalidURLError,
