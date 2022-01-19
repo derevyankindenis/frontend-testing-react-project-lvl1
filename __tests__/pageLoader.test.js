@@ -4,19 +4,19 @@ import nock from 'nock';
 import rimraf from 'rimraf';
 import pageLoader from '../index';
 // prettier-ignore
-import { 
+import {
   NoDirectoryToSaveError,
-  InvalidURLError, 
-  HTMLAlreadyExistsError, 
-  FileCantBeLoadedError
+  InvalidURLError,
+  HTMLAlreadyExistsError,
+  FileCantBeLoadedError,
 } from '../src/Errors';
-// eslint-disable-next-line prettier/prettier
+// eslint-disable-next-line
 // prettier-ignore
-import { 
+import {
   generatePathToRunTests,
   noop,
   getFixturePath,
-  encode
+  encode,
 } from './testUtils';
 
 const DIR_TO_RUN_TEST = generatePathToRunTests();
@@ -131,6 +131,6 @@ describe('negative cases', () => {
       const url = 'https://example.com';
       nock(url).get('/').reply(code);
       await expect(pageLoader(url, DIR_TO_RUN_TEST)).rejects.toThrow(FileCantBeLoadedError);
-    }
+    },
   );
 });
