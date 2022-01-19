@@ -3,7 +3,7 @@
 import { cwd, argv } from 'process';
 import { Command } from 'commander';
 import debug from 'debug';
-import pageLoader from '../src/pageLoader';
+import pageLoader from '../index';
 
 const log = debug('page-loader');
 
