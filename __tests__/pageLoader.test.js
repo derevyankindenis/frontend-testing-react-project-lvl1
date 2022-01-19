@@ -61,7 +61,7 @@ const ASSETS = [
   },
 ];
 
-// const NON_AVALIABLE_ASSETS = ["https://site.com/photos/me2.jpg"];
+const NON_AVALIABLE_ASSETS = ["https://site.com/photos/me2.jpg"];
 
 beforeAll(async () => {
   nock.disableNetConnect();
@@ -77,7 +77,7 @@ beforeEach(() => {
   // TODO: .persist()
   nock(BASE_URL).get(URL).replyWithFile(200, FIXTURE_HTML_PATH_BEFORE, CONTENT_TYPE_HTML);
   ASSETS.forEach((asset) => nock(asset.url).get('').replyWithFile(200, asset.fixturePath, asset.contentType));
-  // NON_AVALIABLE_ASSETS.forEach((url) => nock(url).get("").reply(404));
+  NON_AVALIABLE_ASSETS.forEach((url) => nock(url).get("").reply(404));
 });
 
 afterEach(async () => {
