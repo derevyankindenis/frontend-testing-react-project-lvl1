@@ -2,12 +2,12 @@ import fs from 'fs/promises';
 import path from 'path';
 import nock from 'nock';
 import loadAndSave from '../src/loadAndSave';
-// eslint-disable-next-line prettier/prettier
-import { 
+// eslint-disable-next-line
+import {
   getFixturePath,
   generatePathToRunTests,
   noop,
-  encode
+  encode,
 } from './testUtils';
 import isExists from '../src/isExists';
 import { FileCantBeSavedError, FileCantBeLoadedError } from '../src/Errors';
@@ -49,7 +49,9 @@ describe('loadAndSave', () => {
   test("throw error, if file can't be loaded", async () => {
     expect.assertions(1);
     nock(URL).get('/').reply(404);
-    await expect(loadAndSave(URL, DIR_TO_RUN_TEST, FILE_NAME, (s) => s)).rejects.toThrow(FileCantBeLoadedError);
+    await expect(loadAndSave(URL, DIR_TO_RUN_TEST, FILE_NAME, (s) => s))
+      .rejects
+      .toThrow(FileCantBeLoadedError);
   });
 
   test("throw error, if file can't be saved", async () => {
