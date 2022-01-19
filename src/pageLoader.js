@@ -47,7 +47,7 @@ export default async function pageLoader(url, savePath = cwd()) {
   const [urls, transform] = useTransformHTML(initialURL.origin, pathToSaveFiles);
 
   await loadAndSave(url, filepath, transform);
-  await Promise.all(Object.entries(urls).map(([from, to]) => loadAndSave(from, getFullPath(path.join(savePath, to))).catch(() =>  log('\x1b[33m', `WARNING! ${from} has not been loaded and saved \n\t       ${savePath} \n\t       ${to}`))));
+  await Promise.all(Object.entries(urls).map(([from, to]) => loadAndSave(from, getFullPath(path.join(savePath, to))).catch(() => log('\x1b[33m', `WARNING! ${from} has not been loaded and saved \n\t       ${savePath} \n\t       ${to}`))));
 
   return Promise.resolve({ filepath });
 }
