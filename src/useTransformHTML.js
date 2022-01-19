@@ -1,5 +1,5 @@
-import replaceURLs from "./replaceURLs";
-import useReplacer from "./useReplacer";
+import replaceURLs from './replaceURLs';
+import useReplacer from './useReplacer';
 
 export default function useTransformHTML(baseURL, pathToSaveFiles) {
   const [urls, replacer] = useReplacer(baseURL, pathToSaveFiles);

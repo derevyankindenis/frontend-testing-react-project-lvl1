@@ -1,4 +1,4 @@
-import path from "path";
+import path from 'path';
 
 /**
  * Return valid full path by some path

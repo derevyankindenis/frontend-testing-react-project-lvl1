@@ -1,9 +1,9 @@
-import cheerio from "cheerio";
+import cheerio from 'cheerio';
 
 const SELECTOR_TO_SRC_ATTR = {
-  img: "src",
-  "link[href]": "href",
-  "script[src]": "src",
+  img: 'src',
+  'link[href]': 'href',
+  'script[src]': 'src',
 };
 
 export default function replaceURLs(HTML, replacer) {

@@ -2,10 +2,10 @@ env:
   es2021: true
   node: true
 extends:
-  - "eslint:recommended"
-  - "airbnb-base"
-  - "plugin:jest/recommended"
-  - "prettier"
+  - 'eslint:recommended'
+  - 'airbnb-base'
+  - 'plugin:jest/recommended'
+  - 'prettier'
 plugins:
   - jest
   - prettier
@@ -13,8 +13,9 @@ parserOptions:
   ecmaVersion: 13
   sourceType: module
 rules:
-  no-underscore-dangle: [2, { "allow": ["__filename", "__dirname"] }]
+  no-underscore-dangle: [2, { 'allow': ['__filename', '__dirname'] }]
   comma-dangle: off
   implicit-arrow-linebreak: off
   linebreak-style: off
-  prettier/prettier: ["warn", { endOfLine: "crlf" }]
+  prettier/prettier: ['warn', { endOfLine: 'crlf', singleQuote: true, objectCurlyNewline: true, printWidth: 120 }]
+  object-curly-newline: 'warn'

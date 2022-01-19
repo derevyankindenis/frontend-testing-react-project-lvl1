@@ -1,4 +1,4 @@
-import { trimSlash } from "./utils";
+import { trimSlash } from './utils';
 
 export default class ExtendedURL extends URL {
   constructor(url, base) {
@@ -10,11 +10,11 @@ export default class ExtendedURL extends URL {
   }
 
   toFileName() {
-    const [path, ext] = this.pathname.split(".");
-    const witouhProtocol = [this.hostname, path].join("");
+    const [path, ext] = this.pathname.split('.');
+    const witouhProtocol = [this.hostname, path].join('');
     const trimmedStr = trimSlash(witouhProtocol);
-    const validFileName = trimmedStr.replace(/\W/gi, "-");
-    return [validFileName, ext || "html"].join(".");
+    const validFileName = trimmedStr.replace(/\W/gi, '-');
+    return [validFileName, ext || 'html'].join('.');
   }
 
   get isGlobal() {
@@ -22,7 +22,7 @@ export default class ExtendedURL extends URL {
   }
 
   get extension() {
-    const [, ext] = this.pathname.split(".");
+    const [, ext] = this.pathname.split('.');
     return ext;
   }
 

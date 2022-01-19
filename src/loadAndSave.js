@@ -1,18 +1,17 @@
-import fs from "fs/promises";
-import axios from "axios";
-import log from "./log";
-import { FileCantBeLoadedError, FileCantBeSavedError } from "./Errors";
+import fs from 'fs/promises';
+import axios from 'axios';
+import log from './log';
+import { FileCantBeLoadedError, FileCantBeSavedError } from './Errors';
 
 async function loadFile(url) {
   log(`Loading ${url}`);
   return axios
-    .get(url, { responseType: "arraybuffer" })
+    .get(url, { responseType: 'arraybuffer' })
     .then((response) => {
       log(`Loaded ${url}`);
       return response.data;
     })
-    .catch((e) => {
-      log(e);
+    .catch(() => {
       throw new FileCantBeLoadedError(url);
     });
 }
@@ -33,8 +32,7 @@ const DEFAULT_SAVE_MIDLWARE = (s) => s;
  */
 export default async function loadAndSave(url, path, beforeSave = DEFAULT_SAVE_MIDLWARE) {
   const file = await loadFile(url);
-  await fs.writeFile(path, beforeSave(file), "utf-8").catch((e) => {
-    log(e);
+  await fs.writeFile(path, beforeSave(file), 'utf-8').catch(() => {
     throw new FileCantBeSavedError(path);
   });
 }

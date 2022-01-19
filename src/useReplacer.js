@@ -1,6 +1,6 @@
-import path from "path";
-import { fixSlashes } from "./utils";
-import URL from "./ExtendedURL";
+import path from 'path';
+import { fixSlashes } from './utils';
+import URL from './ExtendedURL';
 
 export default function useReplacer(baseUrl, pathToSave) {
   const urls = {};

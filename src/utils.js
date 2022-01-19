@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 export function trimSlash(str) {
-  const isNotSlash = (char) => char !== "/";
+  const isNotSlash = (char) => char !== '/';
   const startIndex = [...str].findIndex(isNotSlash);
   const endIndex = str.length - [...str].reverse().findIndex(isNotSlash);
   return str.slice(startIndex, endIndex);
@@ -18,5 +18,5 @@ export function fixSlashes(path) {
     return path;
   }
 
-  return path.replace(/\\/g, "/");
+  return path.replace(/\\/g, '/');
 }

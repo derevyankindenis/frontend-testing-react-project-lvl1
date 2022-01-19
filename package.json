@@ -4,7 +4,7 @@
   "description": "Utility to load and save web pages",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest --colors",
+    "test": "cross-env DEBUG=page-loader jest --colors",
     "lint": "eslint .",
     "test-cov": "jest --colors --silent --coverage"
   },

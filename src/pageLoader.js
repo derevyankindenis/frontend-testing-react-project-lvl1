@@ -1,21 +1,17 @@
-import { cwd } from "process";
-import fs from "fs/promises";
-import path from "path";
-import log from "./log";
-import isExists from "./isExists";
-import URL from "./ExtendedURL";
-import {
-  NoDirectoryToSaveError,
-  InvalidURLError,
-  HTMLAlreadyExistsError,
-} from "./Errors";
-import loadAndSave from "./loadAndSave";
-import getFullPath from "./getFullPath";
-import useTransformHTML from "./useTransformHTML";
+import { cwd } from 'process';
+import fs from 'fs/promises';
+import path from 'path';
+import log from './log';
+import isExists from './isExists';
+import URL from './ExtendedURL';
+import { NoDirectoryToSaveError, InvalidURLError, HTMLAlreadyExistsError } from './Errors';
+import loadAndSave from './loadAndSave';
+import getFullPath from './getFullPath';
+import useTransformHTML from './useTransformHTML';
 
 async function createDirectoryToFiles(url, mainPath) {
-  const fileNameWithoutExt = url.toFileName().split(".")[0];
-  const dirToFilesName = [fileNameWithoutExt, "files"].join("_");
+  const fileNameWithoutExt = url.toFileName().split('.')[0];
+  const dirToFilesName = [fileNameWithoutExt, 'files'].join('_');
   const savePath = getFullPath(path.join(mainPath, dirToFilesName));
   if (!isExists(savePath)) {
     await fs.mkdir(savePath);
@@ -30,7 +26,7 @@ async function createDirectoryToFiles(url, mainPath) {
  * @returns {{filepath: string}} object with path to saved page
  */
 export default async function pageLoader(url, savePath = cwd()) {
-  log(`RUN with`, { url, savePath });
+  log('\x1b[32m', `run with ${url} ${savePath}`);
 
   if (!isExists(savePath)) {
     throw new NoDirectoryToSaveError(savePath);
@@ -53,11 +49,8 @@ export default async function pageLoader(url, savePath = cwd()) {
   await loadAndSave(url, filepath, transform);
   await Promise.all(
     Object.entries(urls).map(([from, to]) =>
-      loadAndSave(from, getFullPath(path.join(savePath, to))).catch((e) => {
-        log(
-          "\x1b[33m",
-          `WARNING! ${from} has not been loaded and saved \n ${savePath} \n ${to} \n ${e}`
-        );
+      loadAndSave(from, getFullPath(path.join(savePath, to))).catch(() => {
+        log('\x1b[33m', `WARNING! ${from} has not been loaded and saved \n\t       ${savePath} \n\t       ${to}`);
       })
     )
   );

@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from 'fs';
 
 /**
  * Check existing path
@@ -9,7 +9,7 @@ export default function isExists(path) {
   try {
     fs.accessSync(path);
   } catch (err) {
-    if (err.code === "ENOENT") {
+    if (err.code === 'ENOENT') {
       return false;
     }
   }
