@@ -2,7 +2,13 @@ import fs from 'fs/promises';
 import path from 'path';
 import nock from 'nock';
 import loadAndSave from '../src/loadAndSave';
-import { getFixturePath, generatePathToRunTests, noop, encode } from './testUtils';
+// eslint-disable-next-line prettier/prettier
+import { 
+  getFixturePath,
+  generatePathToRunTests,
+  noop,
+  encode
+} from './testUtils';
 import isExists from '../src/isExists';
 import { FileCantBeSavedError, FileCantBeLoadedError } from '../src/Errors';
 
