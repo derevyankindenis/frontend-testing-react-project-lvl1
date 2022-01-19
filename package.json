@@ -6,7 +6,7 @@
   "scripts": {
     "test": "cross-env DEBUG=page-loader jest --colors",
     "lint": "eslint .",
-    "test-cov": "jest --colors --silent --coverage"
+    "test-coverage": "jest --colors --silent --coverage"
   },
   "repository": {
     "type": "git",
