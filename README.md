@@ -1,5 +1,6 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/derevyankindenis/frontend-testing-react-project-lvl1/workflows/hexlet-check/badge.svg)](https://github.com/derevyankindenis/frontend-testing-react-project-lvl1/actions)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/4f90a3b047edd3aaa617/test_coverage)](https://codeclimate.com/github/derevyankindenis/frontend-testing-react-project-lvl1/test_coverage)
 
 ## How to use it
 
