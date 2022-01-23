@@ -29,7 +29,7 @@ const CONTENT_TYPE_HTML = { 'Content-Type': 'text/html' };
 const DIR_NAME_TO_FILES = 'site-com-blog-about_files';
 const PATH_TO_FILES = path.join(DIR_TO_RUN_TEST, DIR_NAME_TO_FILES);
 const HTML_FILE_NAME = 'site-com-blog-about.html';
-const FIXTURE_HTML_PATH_BEFORE = getFixturePath('site-com-blog-about.html');
+const FIXTURE_HTML_PATH_BEFORE = getFixturePath(HTML_FILE_NAME);
 const FIXTURE_HTML_PATH_AFTER = getFixturePath(`expected/${HTML_FILE_NAME}`);
 
 const getExpectedAssetPath = (fileName) => getFixturePath(`expected/site-com-blog-about_files/${fileName}`);
@@ -54,10 +54,10 @@ const ASSETS = [
     pathAfterSave: path.join(PATH_TO_FILES, 'site-com-assets-scripts.js'),
   },
   {
-    fixturePath: getExpectedAssetPath('site-com-blog-about.html'),
+    fixturePath: getExpectedAssetPath(HTML_FILE_NAME),
     contentType: { 'Content-Type': 'text/html' },
     url: 'https://site.com/blog/about',
-    pathAfterSave: path.join(PATH_TO_FILES, 'site-com-blog-about.html'),
+    pathAfterSave: path.join(PATH_TO_FILES, HTML_FILE_NAME),
   },
 ];
 
@@ -113,7 +113,7 @@ describe('negative cases', () => {
 
   test('throw exeptions if html already exists', async () => {
     expect.assertions(1);
-    const pathToHTML = path.join(DIR_TO_RUN_TEST, 'site-com-blog-about.html');
+    const pathToHTML = path.join(DIR_TO_RUN_TEST, HTML_FILE_NAME);
     await fs.writeFile(pathToHTML, '<html></html>', 'utf-8');
     await expect(pageLoader(FULL_URL, DIR_TO_RUN_TEST)).rejects.toThrow(HTMLAlreadyExistsError);
   });
