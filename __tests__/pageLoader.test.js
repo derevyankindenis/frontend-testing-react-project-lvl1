@@ -3,15 +3,12 @@ import fs from 'fs/promises';
 import nock from 'nock';
 import rimraf from 'rimraf';
 import pageLoader from '../index';
-// prettier-ignore
 import {
   NoDirectoryToSaveError,
   InvalidURLError,
   HTMLAlreadyExistsError,
   FileCantBeLoadedError,
 } from '../src/Errors';
-// eslint-disable-next-line
-// prettier-ignore
 import {
   generatePathToRunTests,
   noop,

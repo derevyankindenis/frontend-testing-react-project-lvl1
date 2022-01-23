@@ -1,21 +1,23 @@
+---
+
+plugins:
+  # https://github.com/jest-community/eslint-plugin-jest
+  - jest
+
+# https://eslint.org/docs/user-guide/configuring#specifying-environments
 env:
-  es2021: true
   node: true
+  jest: true
+  es2020: true
+
+parserOptions:
+  ecmaVersion: 2020
+
 extends:
-  - 'eslint:recommended'
   - 'airbnb-base'
   - 'plugin:jest/recommended'
-  - 'prettier'
-plugins:
-  - jest
-  - prettier
-parserOptions:
-  ecmaVersion: 13
-  sourceType: module
+
 rules:
-  no-underscore-dangle: [2, { 'allow': ['__filename', '__dirname'] }]
-  comma-dangle: off
-  implicit-arrow-linebreak: off
-  linebreak-style: off
-  prettier/prettier: ['warn', { endOfLine: 'crlf', singleQuote: true, objectCurlyNewline: true, printWidth: 120 }]
-  object-curly-newline: 'warn'
+  no-console: 0
+  import/extensions: 0
+  no-underscore-dangle: [2, { "allow": ["__filename", "__dirname"] }]
